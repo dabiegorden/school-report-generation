@@ -1,0 +1,41 @@
+CREATE TABLE "school_settings" (
+	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
+	"school_name" text DEFAULT '' NOT NULL,
+	"address" text DEFAULT '' NOT NULL,
+	"phone" text DEFAULT '' NOT NULL,
+	"logo" text DEFAULT '' NOT NULL,
+	"head_teacher_name" text DEFAULT '' NOT NULL,
+	"head_teacher_signature" text DEFAULT '' NOT NULL,
+	"default_class_teacher" text DEFAULT '' NOT NULL,
+	"class_teacher_signature" text DEFAULT '' NOT NULL,
+	"academic_year" text DEFAULT '' NOT NULL,
+	"current_term" text DEFAULT '' NOT NULL,
+	"next_term_begins" text DEFAULT '' NOT NULL,
+	"grading_scale" jsonb DEFAULT '[{"min":90,"max":100,"grade":1},{"min":80,"max":89,"grade":2},{"min":70,"max":79,"grade":3},{"min":60,"max":69,"grade":4},{"min":50,"max":59,"grade":5},{"min":40,"max":49,"grade":6},{"min":30,"max":39,"grade":7},{"min":20,"max":29,"grade":8},{"min":0,"max":19,"grade":9}]'::jsonb NOT NULL,
+	"created_at" timestamp with time zone DEFAULT now() NOT NULL,
+	"updated_at" timestamp with time zone DEFAULT now() NOT NULL
+);
+--> statement-breakpoint
+CREATE TABLE "reports" (
+	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
+	"student_name" text NOT NULL,
+	"admission_number" text NOT NULL,
+	"current_class" text NOT NULL,
+	"roll_number" text DEFAULT '' NOT NULL,
+	"attendance" text DEFAULT '' NOT NULL,
+	"class_teacher" text DEFAULT '' NOT NULL,
+	"academic_year" text DEFAULT '' NOT NULL,
+	"term" text DEFAULT '' NOT NULL,
+	"subjects" jsonb NOT NULL,
+	"grand_total" integer NOT NULL,
+	"average" real NOT NULL,
+	"percentage" real NOT NULL,
+	"overall_grade" integer NOT NULL,
+	"interest" text DEFAULT '' NOT NULL,
+	"attitude" text DEFAULT '' NOT NULL,
+	"conduct" text DEFAULT '' NOT NULL,
+	"head_teacher_remark" text DEFAULT '' NOT NULL,
+	"class_teacher_remark" text DEFAULT '' NOT NULL,
+	"created_at" timestamp with time zone DEFAULT now() NOT NULL,
+	"updated_at" timestamp with time zone DEFAULT now() NOT NULL
+);

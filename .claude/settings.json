@@ -1,0 +1,8 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(node --experimental-strip-types -e ' *)",
+      "Bash(node -e \"console.log\\('zod', require\\('./node_modules/zod/package.json'\\).version\\); console.log\\('@hookform/resolvers', require\\('./node_modules/@hookform/resolvers/package.json'\\).version\\)\")"
+    ]
+  }
+}
