@@ -15,6 +15,13 @@
       "when": 1784037751231,
       "tag": "0001_stale_tony_stark",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1784040309599,
+      "tag": "0002_charming_albert_cleary",
+      "breakpoints": true
     }
   ]
 }

@@ -29,6 +29,8 @@ export const reports = pgTable("reports", {
   average: real("average").notNull(),
   percentage: real("percentage").notNull(),
   overallGrade: integer("overall_grade").notNull(),
+  /** Class position by grand total. Null for single manual entries. */
+  overallPosition: integer("overall_position"),
   interest: text("interest").notNull().default(""),
   attitude: text("attitude").notNull().default(""),
   conduct: text("conduct").notNull().default(""),
