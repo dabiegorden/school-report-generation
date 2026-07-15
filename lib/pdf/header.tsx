@@ -1,25 +1,16 @@
 import { Image, Text, View } from "@react-pdf/renderer"
 
-import type { SchoolSettings } from "@/db"
 import { initials, renderableImage } from "./image"
 import type { ReportLayout } from "./layout"
 import { styles } from "./styles"
 
 /**
  * School header: logo (or initials fallback), name, address, phone, QR.
- * The school identity comes from `layout` so it can be customized per print;
- * `settings` supplies only the logo.
+ * The whole school identity — logo included — comes from `layout`, so a single
+ * print run can be branded for a different school.
  */
-export function Header({
-  settings,
-  qr,
-  layout,
-}: {
-  settings: SchoolSettings
-  qr?: string
-  layout: ReportLayout
-}) {
-  const logo = renderableImage(settings.logo)
+export function Header({ qr, layout }: { qr?: string; layout: ReportLayout }) {
+  const logo = renderableImage(layout.logo)
   const name = layout.schoolName || "School Name"
 
   return (

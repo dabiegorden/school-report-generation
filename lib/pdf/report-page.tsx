@@ -25,7 +25,7 @@ export function ReportPage({
 }) {
   return (
     <Page size="A4" orientation="portrait" style={styles.page} wrap>
-      <Header settings={settings} qr={qr} layout={layout} />
+      <Header qr={qr} layout={layout} />
       <StudentInformation report={report} layout={layout} />
       <ResultsTable report={report} layout={layout} />
       <SummarySection report={report} layout={layout} />

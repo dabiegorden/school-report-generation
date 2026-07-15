@@ -1,11 +1,13 @@
 "use client"
 
+import Link from "next/link"
 import { RotateCcw } from "lucide-react"
 
 import type { ReportLayout } from "@/lib/pdf/layout"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
+import { ImageUploadField } from "@/components/image-upload-field"
 
 type ReportLayoutFieldsProps = {
   layout: ReportLayout
@@ -18,7 +20,8 @@ type Field = {
   key: keyof ReportLayout
   label: string
   placeholder?: string
-  type?: "text" | "color"
+  type?: "text" | "color" | "image"
+  hint?: string
 }
 
 type FieldGroup = {
@@ -31,6 +34,12 @@ const GROUPS: FieldGroup[] = [
   {
     title: "School",
     fields: [
+      {
+        key: "logo",
+        label: "School logo",
+        type: "image",
+        hint: "Optional — initials are used when empty.",
+      },
       { key: "schoolName", label: "School name", placeholder: "Drobo Senior High" },
       { key: "address", label: "Address", placeholder: "P.O. Box 449 Drobo" },
       { key: "phone", label: "Phone", placeholder: "0592903160" },
@@ -71,8 +80,15 @@ export function ReportLayoutFields({
       <div>
         <p className="text-sm font-medium">Customize report</p>
         <p className="mt-0.5 text-xs text-muted-foreground">
-          Applies to the PDF you preview, print or download. Report details fill
-          in only where a report has no value of its own.
+          Applies to the PDF you preview, print or download — handy for printing
+          under a different school. To save these permanently, use{" "}
+          <Link
+            href="/dashboard/settings"
+            className="font-medium text-blue-600 hover:underline"
+          >
+            School settings
+          </Link>
+          .
         </p>
       </div>
 
@@ -82,41 +98,52 @@ export function ReportLayoutFields({
             <p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
               {group.title}
             </p>
-            {group.fields.map((field) => (
-              <div key={field.key} className="space-y-1.5">
-                <Label htmlFor={`pdf-${field.key}`}>{field.label}</Label>
-                {field.type === "color" ? (
-                  <div className="flex items-center gap-2">
+            {group.fields.map((field) => {
+              const set = (value: string) =>
+                onChange({ ...layout, [field.key]: value })
+
+              if (field.type === "image") {
+                return (
+                  <ImageUploadField
+                    key={field.key}
+                    label={field.label}
+                    hint={field.hint}
+                    value={layout[field.key]}
+                    onChange={set}
+                  />
+                )
+              }
+
+              return (
+                <div key={field.key} className="space-y-1.5">
+                  <Label htmlFor={`pdf-${field.key}`}>{field.label}</Label>
+                  {field.type === "color" ? (
+                    <div className="flex items-center gap-2">
+                      <Input
+                        id={`pdf-${field.key}`}
+                        type="color"
+                        value={layout[field.key]}
+                        className="h-9 w-14 p-1"
+                        onChange={(event) => set(event.target.value)}
+                      />
+                      <Input
+                        aria-label={`${field.label} hex value`}
+                        value={layout[field.key]}
+                        className="flex-1 font-mono text-xs"
+                        onChange={(event) => set(event.target.value)}
+                      />
+                    </div>
+                  ) : (
                     <Input
                       id={`pdf-${field.key}`}
-                      type="color"
                       value={layout[field.key]}
-                      className="h-9 w-14 p-1"
-                      onChange={(event) =>
-                        onChange({ ...layout, [field.key]: event.target.value })
-                      }
+                      placeholder={field.placeholder}
+                      onChange={(event) => set(event.target.value)}
                     />
-                    <Input
-                      aria-label={`${field.label} hex value`}
-                      value={layout[field.key]}
-                      className="flex-1 font-mono text-xs"
-                      onChange={(event) =>
-                        onChange({ ...layout, [field.key]: event.target.value })
-                      }
-                    />
-                  </div>
-                ) : (
-                  <Input
-                    id={`pdf-${field.key}`}
-                    value={layout[field.key]}
-                    placeholder={field.placeholder}
-                    onChange={(event) =>
-                      onChange({ ...layout, [field.key]: event.target.value })
-                    }
-                  />
-                )}
-              </div>
-            ))}
+                  )}
+                </div>
+              )
+            })}
           </div>
         ))}
       </div>

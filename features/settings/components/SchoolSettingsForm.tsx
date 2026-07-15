@@ -30,7 +30,7 @@ import {
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
-import { ImageUploadField } from "./ImageUploadField"
+import { ImageUploadField } from "@/components/image-upload-field"
 
 type FieldName = keyof SettingsFormValues
 

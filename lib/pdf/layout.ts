@@ -6,6 +6,8 @@ import type { SchoolSettings } from "@/db"
  * install can therefore produce cards for different schools and terms.
  */
 export type ReportLayout = {
+  /** Logo image URL shown top-left (blank falls back to initials). */
+  logo: string
   /** School name printed large in the header. */
   schoolName: string
   /** Address line under the school name (blank hides it). */
@@ -33,6 +35,7 @@ export type ReportLayout = {
  * `class`, `term`, `year`, `sort`), which share the same URL.
  */
 export const LAYOUT_PARAMS = {
+  logo: "lLogo",
   schoolName: "lSchool",
   address: "lAddress",
   phone: "lPhone",
@@ -53,6 +56,7 @@ export const DEFAULT_SECTION_COLOR = "#EEF2FF"
 /** The school's saved values, used to prefill the customize fields. */
 export function defaultReportLayout(settings: SchoolSettings): ReportLayout {
   return {
+    logo: settings.logo,
     schoolName: settings.schoolName,
     address: settings.address,
     phone: settings.phone,
