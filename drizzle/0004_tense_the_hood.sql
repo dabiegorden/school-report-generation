@@ -1,0 +1,2 @@
+ALTER TABLE "school_settings" ADD COLUMN "report_header_title" text DEFAULT 'TERMINAL REPORT' NOT NULL;--> statement-breakpoint
+ALTER TABLE "school_settings" ADD COLUMN "report_footer_note" text DEFAULT '' NOT NULL;

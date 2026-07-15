@@ -20,6 +20,16 @@ export const schoolSettings = pgTable("school_settings", {
   academicYear: text("academic_year").notNull().default(""),
   currentTerm: text("current_term").notNull().default(""),
   nextTermBegins: text("next_term_begins").notNull().default(""),
+  /** Default title printed under the school name on report PDFs. */
+  reportHeaderTitle: text("report_header_title")
+    .notNull()
+    .default("TERMINAL REPORT"),
+  /** Default note printed in the report PDF footer (blank = school name). */
+  reportFooterNote: text("report_footer_note").notNull().default(""),
+  /** Primary colour: school name, header rule, table headings, logo tile. */
+  reportAccentColor: text("report_accent_color").notNull().default("#1E3A8A"),
+  /** Background colour for section heading bars. */
+  reportSectionColor: text("report_section_color").notNull().default("#EEF2FF"),
   gradingScale: jsonb("grading_scale")
     .$type<GradeBand[]>()
     .notNull()

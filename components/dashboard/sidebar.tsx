@@ -24,7 +24,11 @@ export function DashboardSidebar() {
   return (
     <Sidebar>
       <SidebarHeader className="px-3 py-4">
-        <Link href="/dashboard" aria-label="Reportly dashboard">
+        <Link
+          href="/dashboard"
+          aria-label="Reportly dashboard"
+          className="[&_span:last-child]:text-sidebar-foreground"
+        >
           <Logo />
         </Link>
       </SidebarHeader>

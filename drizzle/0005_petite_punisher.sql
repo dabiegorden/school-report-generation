@@ -1,0 +1,2 @@
+ALTER TABLE "school_settings" ADD COLUMN "report_accent_color" text DEFAULT '#1E3A8A' NOT NULL;--> statement-breakpoint
+ALTER TABLE "school_settings" ADD COLUMN "report_section_color" text DEFAULT '#EEF2FF' NOT NULL;

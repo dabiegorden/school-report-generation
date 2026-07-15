@@ -25,7 +25,6 @@ export function ExcelParser({ onParsed }: ExcelParserProps) {
   // progress for server actions); it completes when the result returns.
   React.useEffect(() => {
     if (!isPending) return
-    setProgress(8)
     const timer = setInterval(() => {
       setProgress((current) => (current < 90 ? current + 6 : current))
     }, 120)
@@ -34,6 +33,7 @@ export function ExcelParser({ onParsed }: ExcelParserProps) {
 
   function handleFile(file: File) {
     setError(null)
+    setProgress(8)
     const formData = new FormData()
     formData.append("file", file)
 

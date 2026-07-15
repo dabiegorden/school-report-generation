@@ -1,6 +1,7 @@
 "use client"
 
 import * as React from "react"
+import { useRouter } from "next/navigation"
 import { LogOut, Search } from "lucide-react"
 
 import { logout } from "@/actions/auth/logout"
@@ -35,7 +36,9 @@ function getInitials(name: string): string {
 }
 
 export function TopNavbar({ fullName, email }: TopNavbarProps) {
+  const router = useRouter()
   const [isPending, startTransition] = React.useTransition()
+  const [query, setQuery] = React.useState("")
 
   function handleLogout() {
     startTransition(async () => {
@@ -43,20 +46,33 @@ export function TopNavbar({ fullName, email }: TopNavbarProps) {
     })
   }
 
+  // Global search routes to the reports list, reusing its search + filters.
+  function handleSearch(event: React.FormEvent) {
+    event.preventDefault()
+    const term = query.trim()
+    router.push(
+      term
+        ? `/dashboard/reports?q=${encodeURIComponent(term)}`
+        : "/dashboard/reports"
+    )
+  }
+
   return (
     <header className="sticky top-0 z-30 flex h-16 items-center gap-3 border-b border-border bg-background/80 px-4 backdrop-blur-xl">
       <SidebarTrigger className="-ml-1" />
       <Separator orientation="vertical" className="mr-1 h-6" />
 
-      <div className="relative w-full max-w-sm">
+      <form onSubmit={handleSearch} className="relative w-full max-w-sm" role="search">
         <Search className="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
         <Input
           type="search"
-          placeholder="Search students, classes, reports…"
+          value={query}
+          onChange={(event) => setQuery(event.target.value)}
+          placeholder="Search students by name or admission no…"
           className="pl-9"
-          aria-label="Search"
+          aria-label="Search reports"
         />
-      </div>
+      </form>
 
       <div className="ml-auto flex items-center gap-1.5">
         <ThemeToggle />

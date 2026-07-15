@@ -5,6 +5,7 @@ import { Pencil } from "lucide-react"
 
 import { getReportById } from "@/features/reports/queries"
 import { ReportView } from "@/features/reports/components/ReportView"
+import { ReportPdfActions } from "@/features/reports/components/ReportPdfActions"
 import { PageHeader } from "@/components/dashboard/page-header"
 import { Button } from "@/components/ui/button"
 
@@ -30,12 +31,15 @@ export default async function ViewReportPage({
         title={report.studentName}
         description={`${report.currentClass} · ${report.admissionNumber}`}
         action={
-          <Button asChild variant="outline">
-            <Link href={`/dashboard/reports/${report.id}/edit`}>
-              <Pencil className="size-4" />
-              Edit
-            </Link>
-          </Button>
+          <div className="flex items-center gap-2">
+            <Button asChild variant="outline">
+              <Link href={`/dashboard/reports/${report.id}/edit`}>
+                <Pencil className="size-4" />
+                Edit
+              </Link>
+            </Button>
+            <ReportPdfActions reportId={report.id} />
+          </div>
         }
       />
       <ReportView report={report} />

@@ -10,11 +10,15 @@ const themeCycle = ["light", "dark", "system"] as const
 
 export function ThemeToggle() {
   const { setTheme, theme } = useTheme()
-  const [mounted, setMounted] = React.useState(false)
 
-  // The resolved theme is only known on the client. Wait until after mount to
-  // render the icon so the server and client markup match (no hydration error).
-  React.useEffect(() => setMounted(true), [])
+  // The resolved theme is only known on the client. `mounted` is false during
+  // SSR and the first client paint, then true — so the icon only renders once
+  // it can match, avoiding a hydration mismatch (no setState-in-effect needed).
+  const mounted = React.useSyncExternalStore(
+    () => () => {},
+    () => true,
+    () => false
+  )
 
   const currentTheme = theme ?? "system"
   const Icon =

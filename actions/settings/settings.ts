@@ -5,6 +5,7 @@ import { eq } from "drizzle-orm"
 
 import { db, schoolSettings } from "@/db"
 import { getCurrentUser } from "@/lib/auth/auth"
+import { logActivity } from "@/lib/audit"
 import { settingsFormSchema } from "@/lib/validations/settings"
 import { getSchoolSettings } from "@/features/settings/queries"
 
@@ -29,6 +30,7 @@ export async function updateSchoolSettings(
     .set(parsed.data)
     .where(eq(schoolSettings.id, current.id))
 
+  await logActivity(user.email, "settings.updated")
   revalidatePath("/dashboard/settings")
   revalidatePath("/dashboard/manual-entry")
   return { success: true }

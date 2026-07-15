@@ -13,6 +13,10 @@ export const settingsFormSchema = z.object({
   academicYear: z.string(),
   currentTerm: z.string(),
   nextTermBegins: z.string(),
+  reportHeaderTitle: z.string(),
+  reportFooterNote: z.string(),
+  reportAccentColor: z.string(),
+  reportSectionColor: z.string(),
 })
 
 export type SettingsFormValues = z.infer<typeof settingsFormSchema>

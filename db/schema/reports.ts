@@ -36,6 +36,8 @@ export const reports = pgTable("reports", {
   conduct: text("conduct").notNull().default(""),
   headTeacherRemark: text("head_teacher_remark").notNull().default(""),
   classTeacherRemark: text("class_teacher_remark").notNull().default(""),
+  /** Email of the admin who created the report (for report history). */
+  createdBy: text("created_by").notNull().default(""),
   createdAt: timestamp("created_at", { withTimezone: true })
     .notNull()
     .defaultNow(),

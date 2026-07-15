@@ -5,6 +5,7 @@ import { revalidatePath } from "next/cache"
 import { db, reports, type NewReport } from "@/db"
 import { getCurrentUser } from "@/lib/auth/auth"
 import { computeClassResults } from "@/lib/calculations"
+import { logActivity } from "@/lib/audit"
 import { getSchoolSettings } from "@/features/settings/queries"
 import { parseWorkbook } from "@/lib/excel/parser"
 import type { ParseResult } from "@/lib/excel/types"
@@ -104,6 +105,7 @@ export async function saveImport(payload: unknown): Promise<SaveImportResult> {
       conduct: student.conduct,
       headTeacherRemark: student.headTeacherRemark,
       classTeacherRemark: student.classTeacherRemark,
+      createdBy: user.email,
     }
   })
 
@@ -116,6 +118,7 @@ export async function saveImport(payload: unknown): Promise<SaveImportResult> {
     }
   }
 
+  await logActivity(user.email, "bulk.imported", `${rows.length} reports`)
   revalidatePath("/dashboard/reports")
   return { success: true, count: rows.length }
 }

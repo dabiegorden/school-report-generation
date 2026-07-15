@@ -1,4 +1,7 @@
+import { format } from "date-fns"
+
 import type { Report } from "@/db"
+import { ordinalOrDash } from "@/lib/format"
 import {
   Card,
   CardContent,
@@ -26,6 +29,8 @@ export function ReportView({ report }: { report: Report }) {
     ["Class teacher", report.classTeacher],
     ["Academic year", report.academicYear],
     ["Term", report.term],
+    ["Created by", report.createdBy],
+    ["Last updated", format(new Date(report.updatedAt), "d MMM yyyy, HH:mm")],
   ]
 
   const summary: Array<[string, string]> = [
@@ -33,6 +38,7 @@ export function ReportView({ report }: { report: Report }) {
     ["Percentage", `${report.percentage}%`],
     ["Average", String(report.average)],
     ["Overall grade", String(report.overallGrade)],
+    ["Overall position", ordinalOrDash(report.overallPosition)],
   ]
 
   const remarks: Array<[string, string]> = [

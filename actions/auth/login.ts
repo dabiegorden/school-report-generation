@@ -5,6 +5,7 @@ import { redirect } from "next/navigation"
 import { findUserByEmail } from "@/lib/auth/auth"
 import { verifyPassword } from "@/lib/auth/password"
 import { createSession } from "@/lib/auth/session"
+import { logActivity } from "@/lib/audit"
 import { loginSchema } from "@/lib/validations/auth"
 
 export type LoginState = {
@@ -44,5 +45,6 @@ export async function login(values: unknown): Promise<LoginState> {
     role: user.role,
   })
 
+  await logActivity(user.email, "login")
   redirect("/dashboard")
 }

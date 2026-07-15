@@ -1,4 +1,5 @@
 import {
+  Activity,
   FileSpreadsheet,
   FileText,
   Keyboard,
@@ -19,5 +20,6 @@ export const dashboardNavItems: DashboardNavItem[] = [
   { title: "Manual Entry", href: "/dashboard/manual-entry", icon: Keyboard },
   { title: "Bulk Upload", href: "/dashboard/bulk-upload", icon: FileSpreadsheet },
   { title: "Reports", href: "/dashboard/reports", icon: FileText },
+  { title: "Activity", href: "/dashboard/activity", icon: Activity },
   { title: "Settings", href: "/dashboard/settings", icon: Settings },
 ]
